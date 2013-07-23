@@ -1,6 +1,5 @@
 {
     "scripts": {
-            "test": "vows --spec"
+            "test": "./.travis/bin/cake test"
         }   
-        
 }
