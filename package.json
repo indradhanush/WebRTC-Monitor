@@ -1,4 +1,18 @@
 {
+    "name": "plivo-webrtc-monitor",
+    "version": "0.0.1",
+    "description": "Plivo",
+    "devDependencies": {
+        "vows": "0.6.x",
+        "coffee-script": "1.4.x",
+        "testacular": "0.4.x"
+    },
+    "contributors": [ 
+        {
+            "name": "Indradhanush Gupta",
+            "email": "indradhanush.gupta@gmail.com"
+        }
+    ],
     "scripts": {
             "test": "./node_modules/coffee-script/bin/cake test"
         } 
