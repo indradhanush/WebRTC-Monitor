@@ -1,5 +1,5 @@
 {
     "scripts": {
-            "test": "./.travis/bin/cake test"
-        }   
+            "test": "./node_modules/coffee-script/bin/cake test"
+        }, 
 }
