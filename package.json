@@ -5,7 +5,7 @@
     "devDependencies": {
         "vows": "0.6.x",
         "coffee-script": "1.4.x",
-        "testacular": "0.4.x"
+        "karma": "0.8.x"
     },
     "contributors": [ 
         {
