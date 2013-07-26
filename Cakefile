@@ -5,6 +5,6 @@ task 'test', 'run all tests suites', ->
     karma = "#{__dirname}/node_modules/.bin/karma"
     browsers = '.travis/chrome-start.sh'
     options = "--single-run --browsers=#{browsers}"
-    exec "#{chrome_bin} #{karma} start #{__dirname}/.travis/karma.conf.js", (err, stdout, stderr) ->
+    exec "#{chrome_bin} #{karma} start ./.travis/karma.conf.js" ./Jasmine/SpecRunner.html, (err, stdout, stderr) ->
         console.error err if err
         console.log stdout
