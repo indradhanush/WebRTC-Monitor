@@ -1,0 +1,4 @@
+argparse==1.2.1
+selenium==2.33.0
+PyVirtualDisplay==0.1.2
+
