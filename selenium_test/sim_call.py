@@ -18,8 +18,8 @@ class CallerEndpoint(unittest.TestCase):
     def setUp(self):
         display = Display(visible=0, size=(800, 600))
         display.start()
-        self.driver = webdriver.Chrome(chromedriver)\
-        driver_arguments['chrome_options'] = webdriver.ChromeOptions()
+        self.driver = webdriver.Chrome(chromedriver)
+        driver_arguments["chrome_options"] = webdriver.ChromeOptions()
         if "TRAVIS" in os.environ:
             driver_arguments['chrome_options'].add_argument("--no-sandbox")
 
