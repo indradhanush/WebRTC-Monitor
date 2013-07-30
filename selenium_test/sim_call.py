@@ -7,6 +7,7 @@ from pyvirtualdisplay import Display
 
 chromedriver = "./chromedriver"
 os.environ["webdriver.chr  ome.driver"] = chromedriver
+driver_arguments = {}
 
 ENDPOINT = "end1130723173627" 
 PASSWORD = "testplivowebrtc" 
@@ -18,7 +19,10 @@ class CallerEndpoint(unittest.TestCase):
         display = Display(visible=0, size=(800, 600))
         display.start()
         self.driver = webdriver.Chrome(chromedriver)\
-       
+        driver_arguments['chrome_options'] = webdriver.ChromeOptions()
+        if "TRAVIS" in os.environ:
+            driver_arguments['chrome_options'].add_argument("--no-sandbox")
+
     def test_login(self):
         driver = self.driver
         driver.get("file:///home/dhanush/WebRTC-Monitor/caller.html")

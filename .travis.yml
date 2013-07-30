@@ -5,6 +5,9 @@ python:
 install: pip install selenium pyvirtualdisplay
 
 before_script:
+  - ls -l /dev/shm
+  - sudo chmod 1777 /dev/shm
+  - ls -l /dev/shm
   - chmod +x ./.travis/scripts/install_chrome.sh
   - "wget https://chromedriver.googlecode.com/files/chromedriver_linux64_2.1.zip" 
   - sudo apt-get install unzip
