@@ -3,9 +3,10 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import ui
+from pyvirtualdisplay import Display
 
 chromedriver = "./chromedriver"
-os.environ["webdriver.chrome.driver"] = chromedriver
+os.environ["webdriver.chr  ome.driver"] = chromedriver
 
 ENDPOINT = "end1130723173627" 
 PASSWORD = "testplivowebrtc" 
@@ -14,8 +15,10 @@ DESTINATION = "end2130723173650@phone.plivo.com"
 class CallerEndpoint(unittest.TestCase):
     
     def setUp(self):
-        self.driver = webdriver.Chrome(chromedriver)
-
+        display = Display(visible=0, size=(800, 600))
+        display.start()
+        self.driver = webdriver.Chrome(chromedriver)\
+       
     def test_login(self):
         driver = self.driver
         driver.get("file:///home/dhanush/WebRTC-Monitor/caller.html")
@@ -37,14 +40,14 @@ class CallerEndpoint(unittest.TestCase):
 
     # def test_something(self):
     #    pass
-    def test_call(self):
-        driver = self.driver
-        wait = ui.WebDriverWait(driver, 30)
-        wait.until(lambda driver: driver.find_element_by_id(
-                                         "callcontainer").is_displayed())
-        print "Yeah!!!"
-        #destination = driver.find_element_by_id("to")
-        #destination.send_keys(DESTINATION)
+    # def test_call(self):
+    #     driver = self.driver
+    #     wait = ui.WebDriverWait(driver, 30)
+    #     wait.until(lambda driver: driver.find_element_by_id(
+    #                                      "callcontainer").is_displayed())
+    #     print "Yeah!!!"
+    #     #destination = driver.find_element_by_id("to")
+    #     #destination.send_keys(DESTINATION)
 
 if __name__ == "__main__":
         unittest.main()
