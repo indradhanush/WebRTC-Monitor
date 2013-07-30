@@ -11,7 +11,6 @@ before_script:
   - unzip -a chromedriver_linux64_2.1.zip
   - chmod +x ./chromedriver
   - ./.travis/scripts/install_chrome.sh
-  - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.33.0.jar"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
