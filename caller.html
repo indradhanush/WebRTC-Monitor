@@ -124,27 +124,32 @@
     function onCalling() {
         console.log("onCalling");
         $('#status_txt').text('Call Connecting');
+        $('#call_connecting').show();
     }
 
     function onCallRemoteRinging() {
         $('#status_txt').text('Call In Progress');
+        $('#call_ringing').show();
     }
 
     function onCallAnswered() {
         console.log('onCallAnswered');
         callAnsweredUI();
         $('#status_txt').text('Call In Progress');
+        $('#call_answered').show();
     }
 
     function onCallTerminated() {
         console.log("onCallTerminated");
         callUI();
+        $('#call_terminated').show();
     }
 
     function onCallFailed(cause) {
         console.log("onCallFailed:"+cause);
         callUI();
         $('#status_txt').text("Call Failed:"+cause);
+        $('call_failed').show();
     }
 
     function call() {
@@ -247,7 +252,6 @@
         Plivo.onIncomingCall = onIncomingCall;
         Plivo.onIncomingCallCanceled = onIncomingCallCanceled;
         Plivo.init({"listen_mode":"False"});
-        //login();
     });
 
   </script>
@@ -296,6 +300,33 @@
                       <a href="#" class="btn main-btn btn-danger" onclick="reject()">Reject</a>
                   </div>
 
+                  <div id="call_connecting" style="display: none">
+                        <input class="btn" type="button" id="connect" value="Connecting">
+                        <br>
+                  </div>
+
+                  <div id="call_ringing" style="display: none">
+                        <input class="btn" type="button" id="connect" value="Ringing">
+                        <br>
+                  </div>
+                  
+                  <div id="call_answered" style="display: none">
+                        <input class="btn" type="button" id="connect" value="Answered">
+                        <br>
+                  </div>
+                  
+                  <div id="call_terminated" style="display: none">
+                        <input class="btn" type="button" id="connect" value="Terminated">
+                        <br>
+                  </div>
+                
+                  <div id="call_failed" style="display: none">
+                        <input class="btn" type="button" id="connect" value="Failed">
+                        <br>
+                  </div>
+
+
+                  
                   <div id="btn-container" style="display: none">
                       <a href="#" id="hangup_call" class="btn main-btn btn-danger" onclick="hangup();">Hangup</a>
                       <a href="#" id="linkMute" class="badge badge-warning" onclick="mute();">Mute</a>
