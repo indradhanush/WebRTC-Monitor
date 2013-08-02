@@ -18,7 +18,7 @@ PASSWORD = "testplivowebrtc"
 DESTINATION = "end2130723173650@phone.plivo.com"
 
 STATUS = 0
-ERROR_STATUS = {
+EXIT_LEVEL = {
     0: "FAILED_AT_START",
     1: "FAILED_AFTER_LOGIN",
     2: "FAILED_AFTER_ATTEMPT_TO_CALL_CONNECT",
@@ -26,8 +26,13 @@ ERROR_STATUS = {
     4: "FAILED_AFTER_CALL_ANSWERED",
     5: "FAILED_AFTER_CALL_TERMINATED",
     6: "FAILED_AFTER_CALLER_LOGOUT",
-    7: "FAILED_AFTER_RECEIVER_LOGOUT"
+    7: "FAILED_AFTER_RECEIVER_LOGOUT",
+    8: "TEST_SUCCESSFUL"
 }
+
+def locate_element(driver, element):
+    return lambda driver: driver.find_element_by_id(element).is_displayed()
+
 
 class CallerEndpoint(unittest.TestCase):
     
@@ -46,57 +51,49 @@ class CallerEndpoint(unittest.TestCase):
             driver.get("file:///home/dhanush/WebRTC-Monitor/caller.html")
             self.assertIn("Plivo Webphone Demo", driver.title)
             wait = ui.WebDriverWait(driver, 30)
-            wait.until(lambda driver: driver.find_element_by_id(
-                                             "login_box").is_displayed())
+            wait.until(locate_element(driver, "login_box"))
             username = driver.find_element_by_id("username")
             passwd = driver.find_element_by_id("password")
             username.send_keys(ENDPOINT)
             passwd.send_keys(PASSWORD)
             driver.find_element_by_id("btn_login").click()
-            wait.until(lambda driver: driver.find_element_by_id(
-                                            "callcontainer").is_displayed())
+            wait.until(locate_element(driver, "callcontainer"))
             self.LEVEL = 1
            
             # Test Call
             to = driver.find_element_by_id("to")
             to.send_keys(DESTINATION)
             driver.find_element_by_id("make_call").click()
-            wait.until(lambda driver: driver.find_element_by_id(
-                                            "call_connecting").is_displayed())
+            wait.until(locate_element(driver, "call_connecting"))
             self.LEVEL = 2
-            wait.until(lambda driver: driver.find_element_by_id(
-                                            "call_ringing").is_displayed())
+            wait.until(locate_element(driver, "call_ringing"))
             self.LEVEL = 3
-            wait.until(lambda driver: driver.find_element_by_id(
-                                            "call_answered").is_displayed())
+            wait.until(locate_element(driver, "call_answered"))
             self.LEVEL = 4
-            wait.until(lambda driver: driver.find_element_by_id(
-                                            "call_terminated").is_displayed())
+            wait.until(locate_element(driver, "call_terminated"))
             self.LEVEL = 5
-            wait.until(lambda driver: driver.find_element_by_id(
-                                            "logout_box").is_displayed())
+            wait.until(locate_element(driver, "logout_box"))
             driver.find_element_by_id("btn_logout").click()
             self.LEVEL = 6
-            wait.until(lambda receiver: receiver.find_element_by_id(
-                                            "logout_box").is_displayed())
+            wait.until(locate_element(driver, "logout_box"))
             receiver.find_element_by_id("btn_logout").click()
             self.LEVEL = 7
 
         # Printing out for now. Needs to be a POST along with STATUS
         except TimeoutException:
-            print "TimeoutException: LEVEL %d - %s" % (self.LEVEL, str(ERROR_STATUS[self.LEVEL]))
+            print "TimeoutException: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 2
             
         except WebDriverException:
-            print "WebDriverException: LEVEL %d - %s" % (self.LEVEL, str(ERROR_STATUS[self.LEVEL]))
+            print "WebDriverException: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 2
             
         except ErrorInResponseException:
-            print "ErrorInResponseException: LEVEL %d - %s" % (self.LEVEL, str(ERROR_STATUS[self.LEVEL]))
+            print "ErrorInResponseException: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 2
             
         except:
-            print "UnknownException: LEVEL %d - %s" % (self.LEVEL, str(ERROR_STATUS[self.LEVEL]))
+            print "UnknownException: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 3
             
    
@@ -104,10 +101,12 @@ class CallerEndpoint(unittest.TestCase):
         try:
             self.driver.close()
             self.receiver.close()
+            self.LEVEL = 8
         except:
-            print "UnknownException in TearDown: LEVEL %d - %s" % (self.LEVEL, str(ERROR_STATUS[self.LEVEL]))
+            print "UnknownException in TearDown: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 3
-            
+        else:
+            print "Test Successful: LEVEL %d" % (self.LEVEL)
 
     # def test_call(self):
     #     try:
