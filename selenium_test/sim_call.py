@@ -10,12 +10,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import ui
 from selenium.common.exceptions import WebDriverException, TimeoutException, ErrorInResponseException
 
+# Chrome Settings
 chromedriver = "./chromedriver"
 os.environ["webdriver.chrome.driver"] = chromedriver
 
+# Endpoint Configuration
 ENDPOINT = "end1130723173627" 
 PASSWORD = "testplivowebrtc" 
 DESTINATION = "end2130723173650@phone.plivo.com"
+
+# HTML files for test
+CALLER = "file:///home/dhanush/WebRTC-Monitor/caller.html"
+RECEIVER = "file:///home/dhanush/WebRTC-Monitor/receiver.html"
 
 STATUS = 0
 EXIT_LEVEL = {
@@ -30,6 +36,7 @@ EXIT_LEVEL = {
     8: "TEST_SUCCESSFUL"
 }
 
+
 def locate_element(driver, element):
     return lambda driver: driver.find_element_by_id(element).is_displayed()
 
@@ -37,18 +44,19 @@ def locate_element(driver, element):
 class CallerEndpoint(unittest.TestCase):
     
     def setUp(self):
+        self.LEVEL = 0
+        self.TEST_CLEAN = False
         display = Display(visible=0, size=(800, 600))
         display.start()
-        self.LEVEL = 0  
         self.driver = webdriver.Chrome(chromedriver)
         self.receiver = webdriver.Chrome(chromedriver)
-        self.receiver.get("file:///home/dhanush/WebRTC-Monitor/receiver.html")
+        self.receiver.get(RECEIVER)
         
     def test_webrtc(self):
         try:
             driver = self.driver
             receiver = self.receiver
-            driver.get("file:///home/dhanush/WebRTC-Monitor/caller.html")
+            driver.get(CALLER)
             self.assertIn("Plivo Webphone Demo", driver.title)
             wait = ui.WebDriverWait(driver, 30)
             wait.until(locate_element(driver, "login_box"))
@@ -95,17 +103,21 @@ class CallerEndpoint(unittest.TestCase):
         except:
             print "UnknownException: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 3
-            
+        
+        else:
+            self.TEST_CLEAN = True
+
     def tearDown(self):
         try:
             self.driver.close()
             self.receiver.close()
-            self.LEVEL = 8
         except:
             print "UnknownException in TearDown: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 3
         else:
-            print "Test Successful: LEVEL %d" % (self.LEVEL)
+            if self.TEST_CLEAN: 
+                self.LEVEL = 8
+                print "Test Successful: LEVEL %d" % (self.LEVEL)
 
 
 if __name__ == "__main__":
