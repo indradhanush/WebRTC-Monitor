@@ -44,7 +44,7 @@ class CallerEndpoint(unittest.TestCase):
         self.receiver = webdriver.Chrome(chromedriver)
         self.receiver.get("file:///home/dhanush/WebRTC-Monitor/receiver.html")
         
-    def test_login(self):
+    def test_webrtc(self):
         try:
             driver = self.driver
             receiver = self.receiver
@@ -96,7 +96,6 @@ class CallerEndpoint(unittest.TestCase):
             print "UnknownException: LEVEL %d - %s" % (self.LEVEL, str(EXIT_LEVEL[self.LEVEL]))
             STATUS = 3
             
-   
     def tearDown(self):
         try:
             self.driver.close()
@@ -107,12 +106,6 @@ class CallerEndpoint(unittest.TestCase):
             STATUS = 3
         else:
             print "Test Successful: LEVEL %d" % (self.LEVEL)
-
-    # def test_call(self):
-    #     try:
-    #         to = driver.find_element_by_id("to")
-    #         to.send_keys(DESTINATION)
-    #         driver.find_element_by_id("make_call").click()
 
 
 if __name__ == "__main__":
