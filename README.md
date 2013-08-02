@@ -41,13 +41,21 @@ When the test fails it sends out a LEVEL to indicate the point at which it
 failed.
 
 LEVEL 0: "FAILED_AT_START"
+
 LEVEL 1: "FAILED_AFTER_LOGIN"
+
 LEVEL 2: "FAILED_AFTER_ATTEMPT_TO_CALL_CONNECT"
+
 LEVEL 3: "FAILED_AFTER_CALL_RINGING"
+
 LEVEL 4: "FAILED_AFTER_CALL_ANSWERED"
+
 LEVEL 5: "FAILED_AFTER_CALL_TERMINATED"
+
 LEVEL 6: "FAILED_AFTER_CALLER_LOGOUT"
+
 LEVEL 7: "FAILED_AFTER_RECEIVER_LOGOUT"
+
 LEVEL 8: "TEST_SUCCESSFUL"
 
 The test runs with listen_mode set to True and thus doesn not ask for any media
