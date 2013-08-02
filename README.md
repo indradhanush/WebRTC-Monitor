@@ -28,6 +28,8 @@ To set up a system the clone the repo and then the following is necessary before
 
 8. pip install -r requirements.txt (Preferably in a virtualenv)
 
+The selenium tests are on the branch >> selenium
+
 It is also important to configure the paths for caller.html, reciever.html and
 the chromedriver in the test code. 
 
