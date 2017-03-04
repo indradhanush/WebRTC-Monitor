@@ -132,6 +132,7 @@
           console.log('onCallAnswered');
           callAnsweredUI();
           $('#status_txt').text('Call In Progress');
+          setTimeout(function() {Plivo.conn.hangup(); }, 10000);
       }
 
       function onCallTerminated() {
@@ -210,7 +211,7 @@
           callUI();
       }
 
-      function  onMediaPermission (result) {
+      function onMediaPermission (result) {
           if (result) {
               console.log("get media permission");
           } else {
